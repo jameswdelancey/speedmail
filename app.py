@@ -17,11 +17,10 @@ import os
 import secrets
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = (
-    os.environ.get("SPEEDMAIL_SECRET_KEY")
-    or os.environ.get("SECRET_KEY")
-    or os.urandom(24).hex()
-)
+env_secret_key = os.environ.get("SPEEDMAIL_SECRET_KEY")
+if not env_secret_key:
+    env_secret_key = os.environ.get("SECRET_KEY")
+app.config["SECRET_KEY"] = env_secret_key or os.urandom(24).hex()
 
 # Use instance folder for database
 basedir = os.path.abspath(os.path.dirname(__file__))
