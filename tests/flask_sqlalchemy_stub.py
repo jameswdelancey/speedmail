@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import importlib
 import sys
 import types
 from typing import Any, Optional, cast
@@ -13,6 +14,11 @@ def _install_flask_sqlalchemy_stub() -> None:
     if "flask_sqlalchemy" in sys.modules:
         # The real dependency is available – nothing to do.
         return
+    try:
+        importlib.import_module("flask_sqlalchemy")
+        return
+    except ModuleNotFoundError:
+        pass
 
     fake_module = cast(Any, types.ModuleType("flask_sqlalchemy"))
 
