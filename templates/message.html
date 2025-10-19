@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ message.subject }}</h2>
+<p><strong>From:</strong> {{ message.sender.username }}</p>
+<p><strong>To:</strong> {{ message.recipient.username }}</p>
+<hr>
+<p>{{ message.body }}</p>
+<hr>
+<small class="text-muted">Sent {{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+<br><br>
+<a href="{{ url_for('compose', to=message.sender.username, subject='Re: ' + message.subject) }}" class="btn btn-primary">Reply</a>
+<a href="{{ url_for('inbox') }}" class="btn btn-secondary">Back to Inbox</a>
+{% endblock %}

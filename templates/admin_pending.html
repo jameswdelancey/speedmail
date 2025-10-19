@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Pending Users</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Payment Verified</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in pending_users %}
+    <tr>
+      <td>{{ user.email }}</td>
+      <td>{{ 'No' if not user.payment_verified else 'Yes' }}</td>
+      <td>
+        <a href="{{ url_for('admin_approve', user_id=user.id) }}" class="btn btn-success btn-sm">Approve</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Compose Email</h2>
+
+<form method="POST" class="mt-3">
+  <div class="mb-3">
+    <label class="form-label">To</label>
+    <input type="email" class="form-control" name="recipient" value="{{ recipient or '' }}" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Subject</label>
+    <input type="text" class="form-control" name="subject" value="{{ subject or '' }}">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Message</label>
+    <textarea class="form-control" name="message" rows="5" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Send</button>
+  <a href="{{ url_for('inbox') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
