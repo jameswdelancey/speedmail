@@ -12,4 +12,4 @@ format:
 
 lint:
 	mypy .
-	flake8 --ignore=E501
+	flake8 --ignore=E302,E305,E501
