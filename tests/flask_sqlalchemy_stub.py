@@ -58,7 +58,9 @@ def _install_flask_sqlalchemy_stub() -> None:
         def __init__(self, *_: Any, **__: Any) -> None:  # pragma: no cover - trivial
             pass
 
-    def _fake_relationship(*_: Any, **__: Any) -> list[Any]:  # pragma: no cover - trivial
+    def _fake_relationship(
+        *_: Any, **__: Any
+    ) -> list[Any]:  # pragma: no cover - trivial
         return []
 
     def _fake_backref(name: str, **_: Any) -> str:  # pragma: no cover - trivial
