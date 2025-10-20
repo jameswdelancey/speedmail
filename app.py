@@ -120,7 +120,7 @@ def register():
             flash("Account already exists.", "danger")
             return redirect(url_for("register"))
 
-        hashed_pw = generate_password_hash(password)
+        hashed_pw = generate_password_hash(password, method="pbkdf2:sha256")
         new_user = User(email=email, password=hashed_pw)
         db.session.add(new_user)
         db.session.commit()
