@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unittest
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Any, Optional, cast
 
 from werkzeug.security import generate_password_hash
 
@@ -16,6 +16,7 @@ from tests.flask_sqlalchemy_stub import ensure_stub
 ensure_stub()
 
 from app import User, app, db  # noqa: E402
+from sqlalchemy.orm import Session, scoped_session  # noqa: E402
 
 
 class AppTestCase(unittest.TestCase):
@@ -30,7 +31,8 @@ class AppTestCase(unittest.TestCase):
 
     def tearDown(self) -> None:
         with app.app_context():
-            db.session.remove()
+            scoped = cast("scoped_session[Session]", db.session)
+            scoped.remove()
             db.drop_all()
 
     def test_index_redirects_to_login(self) -> None:
@@ -41,7 +43,10 @@ class AppTestCase(unittest.TestCase):
     def _get_csrf_token(self, path: str) -> str:
         self.app.get(path)
         with self.app.session_transaction() as session_data:
-            return session_data["_csrf_token"]
+            token: Any = session_data["_csrf_token"]
+            if not isinstance(token, str):
+                raise AssertionError("Missing CSRF token in session")
+            return token
 
     def _create_user(
         self,
