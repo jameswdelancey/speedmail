@@ -1,10 +1,12 @@
 .PHONY: run test format lint
 
+PYTHON := python3
+
 run:
-	python app.py
+	$(PYTHON) app.py
 
 test:
-	python -m unittest discover -s tests -p 'test_*.py'
+	$(PYTHON) -m unittest discover -s tests -p 'test_*.py'
 
 format:
 	isort .
